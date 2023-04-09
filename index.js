@@ -12,6 +12,7 @@ const html = `
 <!DOCTYPE HTML>
 <html>
 <head>
+<title>Code Selectors - convention for referencing parts of code</title>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="index.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
