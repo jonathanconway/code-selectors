@@ -1,0 +1,301 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+  <header>
+    <h1><strong>Code Selectors</strong> - convention for referencing parts of code</h1>
+  </header>
+  <main>
+    <div class="markdown-body">
+      <h1 id="code-selectors">Code Selectors</h1>
+<blockquote>
+  <p>Convention for referencing pieces of code</p>
+</blockquote>
+<p>⚡️ <strong><em>It's like CSS selectors, but for code!</em></strong></p>
+<p>Have you ever wanted a consistent and concise way of referencing a specific part of a code-base?</p>
+<p>For example, suppose you wanted to refer to a function named <code>login</code> or a constant named <code>color</code>. How would you reference them, apart from using a line number (e.g. myfile.ts:23) or plain English (e.g. "the login function in myfile.ts")?</p>
+<p>And how would you deal with more complex nested structures, such as <code>r</code>, <code>g</code> and <code>b</code> fields inside an object assigned to a <code>color</code> constant, or an anonymous callback passed to a <code>then</code> call on a Promise?</p>
+<p>Code selectors to the rescue!</p>
+<p>Code selectors aim to provide a consistent and concise language allowing you to reference any structure in any code file.</p>
+<p>With code selectors, you can now write something like: <code>myfile.ts/login</code> to reference your login function or <code>myfile.ts/colors.r</code> to reference the <code>r</code> field in your <code>color</code> constant.</p>
+<h2 id="characteristics-of-code-selectors">Characteristics of code selectors</h2>
+<h3 id="concise"><strong><em>Concise</em></strong></h3>
+<p>Code selectors take as little space as possible. Brevity makes the selectors faster to type, easier to read and more convenient to copy/paste or add to links.</p>
+<h3 id="readable"><strong><em>Readable</em></strong></h3>
+<p>Code selectors use the real names of structures as much as possible, to optimise for readability.</p>
+<p>Where names are not available, 1-based indeces are used, referencing the <em>n</em>th of the class of object being described. For example a reference to the 2nd parameter of a function call uses the index 2, even if it is preceded by previous function calls with their own parameters.</p>
+<h3 id="composable"><strong><em>Composable</em></strong></h3>
+<p>Complex references can be be built up from simpler, interchangeable parts.</p>
+<p>For example, to refer to a constant in a function in a field on an object, we can compose "closure", "object field" and "structure" together, to create one complete reference.</p>
+<h2 id="parts-of-code-selectors">Parts of code selectors</h2>
+<ul>
+<li><a href="#structure">Structure</a></li>
+<li><a href="#anonymous-structure">Anonymous structure</a></li>
+<li><a href="#object-field">Object field</a></li>
+<li><a href="#array-element">Array element</a></li>
+<li><a href="#function-call">Function call</a></li>
+<li><a href="#function-call-argument">Function call argument</a></li>
+<li><a href="#closure">Closure</a></li>
+</ul>
+<h3 id="structure">Structure</h3>
+<p>Any named structure (function, constant, etc) declared in the main body of a file can be referenced by name of the file, followed by a "contains" accessor - <code>/</code>, followed by the name of the structure.</p>
+<blockquote>
+  <p>[file.ext] / <strong><code>name</code></strong></p>
+</blockquote>
+<ul>
+<li><strong><code>name</code></strong> is the name of the structure</li>
+</ul>
+<p>For example, to reference the function <code>bar</code> in file <code>myfile.ts</code>:</p>
+<pre><code class="ts language-ts">// myfile.ts
+
+function foo() {}
+
+// * reference this
+function bar() {}
+</code></pre>
+<p>You can use this selector:</p>
+<blockquote>
+  <p><code>myfile.ts/bar</code></p>
+</blockquote>
+<hr />
+<h3 id="anonymous-structure">Anonymous structure</h3>
+<p>Not all structures have names. We might declare a self-calling function (IFFE) or immediately loop over an array declared inline. We can reference such a structure by its type, followed by an "indexing" accessor, followed by a numeric, 1-based index indicating the order of that structure within the set of all structures of the same type.</p>
+<blockquote>
+  <p>[file.ext] / <strong><code>(type)</code></strong>@<strong><code>(index)</code></strong></p>
+</blockquote>
+<ul>
+<li><p><strong><code>type</code></strong> is one of the following:</p>
+<ul>
+<li><code>func</code> - function</li>
+<li><code>arr</code> - array</li>
+<li><code>obj</code> - object</li>
+<li><code>clo</code> - anonymous closure</li></ul></li>
+<li><p><strong><code>index</code></strong> is an order index, 1 or greater.</p></li>
+</ul>
+<p>For example, to reference the second self-calling function declared in file <code>myfile.ts</code>:</p>
+<pre><code class="ts language-ts">// myfile.ts
+
+(function () {
+
+})();
+
+// * reference this
+(function () {
+
+})();
+</code></pre>
+<p>You can use this selector:</p>
+<blockquote>
+  <p><code>myfile.ts/func@2</code></p>
+</blockquote>
+<p>Or, to reference the second array declared inline in file <code>myfile.ts</code>:</p>
+<pre><code class="ts language-ts">// myfile.ts
+
+(function () {
+
+})();
+
+[1,2,3].map(console.log);
+
+[4,5,6].map(console.log); // * reference this
+</code></pre>
+<p>You can use this selector:</p>
+<blockquote>
+  <p><code>myfile.ts/arr@2</code></p>
+</blockquote>
+<hr />
+<h3 id="object-field">Object field</h3>
+<p>Any structure which is declared or set as a field on a containing object can be referenced by referencing the containing structure, followed by the "object field" accessor - <code>.</code>, followed by the name of the field itself.</p>
+<blockquote>
+  <p>[file.ext] / <strong><code>(object)</code></strong>.<strong><code>(field)</code></strong></p>
+</blockquote>
+<ul>
+<li><p><strong><code>object</code></strong> is the <em>name</em> of the containing structure</p></li>
+<li><p><strong><code>field</code></strong> is the name of the contained field</p></li>
+</ul>
+<p>For example, to reference the field <code>bar</code>, declared in the object <code>foo</code>, declared in file <code>myfile.ts</code>:</p>
+<pre><code class="ts language-ts">// myfile.ts
+
+const foo = {
+  bar: '1' // * reference this
+};
+</code></pre>
+<p>You can use this selector:</p>
+<blockquote>
+  <p><code>myfile.ts/foo.bar</code></p>
+</blockquote>
+<p>Or, to reference the field <code>bar</code>, set as a field on the object <code>foo</code>, declared in file <code>myfile.ts</code>:</p>
+<pre><code class="ts language-ts">// myfile.ts
+
+const foo = {};
+
+foo.bar = '1'; // * reference this
+</code></pre>
+<p>You can use the same selector as above:</p>
+<blockquote>
+  <p><code>myfile.ts/foo.bar</code></p>
+</blockquote>
+<hr />
+<h3 id="array-element">Array element</h3>
+<p>Any structure which is declared as an element on a containing array can be referenced by referencing the containing structure, followed by an "array index" accessor and the index of the item - <code>[n]</code>.</p>
+<blockquote>
+  <p>[file.ext] / <strong><code>(array)</code></strong> [<strong><code>(index)</code></strong>]</p>
+</blockquote>
+<ul>
+<li><p><strong><code>array</code></strong> is the <em>name</em> of the containing structure</p></li>
+<li><p><strong><code>index</code></strong> is the <em>index</em> of the contained element</p></li>
+</ul>
+<p>For example, to reference the string <code>bar</code>, held in the array <code>foo</code> at index 1, declared in file <code>myfile.ts</code>:</p>
+<pre><code class="ts language-ts">// myfile.ts
+
+const foo = [
+  'baz',
+  'bar' // * reference this
+];
+</code></pre>
+<p>You can use this selector:</p>
+<blockquote>
+  <p><code>myfile.ts/foo[1]</code></p>
+</blockquote>
+<p>Or, to reference the string <code>bar</code>, set at index 1 of the array <code>foo</code>, declared in file <code>myfile.ts</code>:</p>
+<pre><code class="ts language-ts">// myfile.ts
+
+const foo = ['baz'];
+
+foo[1] = 'bar'; // * reference this
+</code></pre>
+<p>You can use the same selector as above:</p>
+<blockquote>
+  <p><code>myfile.ts/foo[1]</code></p>
+</blockquote>
+<hr />
+<h3 id="function-call">Function call</h3>
+<p>Function calls are one of the most common kinds of expressions in any Javascript/Typescript project. We can reference a call by referencing the structure being called, followed by an indicator that it is being called - <code>()</code>.</p>
+<blockquote>
+  <p>[file.ext] / <strong><code>(call)</code></strong><code>()</code></p>
+</blockquote>
+<p>For example, to reference the call to the imported <code>foo</code> function, declared in file <code>myfile.ts</code>:</p>
+<pre><code class="ts language-ts">// myfile.ts
+
+import { foo } from 'foo.utils';
+
+foo('hello');
+</code></pre>
+<p>You can use this selector:</p>
+<blockquote>
+  <p><code>myfile.ts/foo()</code></p>
+</blockquote>
+<hr />
+<h3 id="function-call-argument">Function call argument</h3>
+<p>Suppose you want to reference an argument being passed to a parameter of a function call. This can be done by referencing the function call, followed by a "containment" indicator - simply <code>/</code>, followed by a numeric 1-based index, indicating the parameter's order within the function's parameter list. </p>
+<blockquote>
+  <p>[file.ext] / <strong><code>(call)</code></strong> / @<strong><code>(index)</code></strong></p>
+</blockquote>
+<p>For example, to reference the anonymous function passed to the 2nd parameter to the imported <code>foo</code> function, declared in file <code>myfile.ts</code>:</p>
+<pre><code class="ts language-ts">// myfile.ts
+
+import { foo } from 'foo.utils';
+
+foo('hello', () =&gt; 'world');
+</code></pre>
+<p>You can use this selector:</p>
+<blockquote>
+  <p><code>myfile.ts/foo()/@2</code></p>
+</blockquote>
+<hr />
+<h3 id="closure">Closure</h3>
+<p>Many of the structures that make up a Javascript/Typescript project are actually found inside a closure of some kind, rather than declared in the top-level scope. We can reference an entity declared inside of a closure by simply referencing that closure, followed by a "containment" indicator - simply <code>/</code>, followed by the structure itself.</p>
+<blockquote>
+  <p>[file.ext] / <strong><code>(closure)</code></strong> / <strong><code>(structure)</code></strong></p>
+</blockquote>
+<p>For example, to reference the constant <code>bar</code> declared inside the top-level function <code>foo</code>, declared in file <code>myfile.ts</code>:</p>
+<pre><code class="ts language-ts">// myfile.ts
+
+function foo() {
+  const bar = "hello!"; // * reference this
+}
+</code></pre>
+<p>You can use this selector:</p>
+<blockquote>
+  <p><code>myfile.ts/foo/bar</code></p>
+</blockquote>
+<hr />
+<h2 id="complex-examples">Complex examples</h2>
+<h3 id="nodejsexpress-login-request-handler">NodeJS/Express login request handler</h3>
+<pre><code class="ts language-ts">import express from "express";
+import { getUser } from "users";
+
+const app = express();
+
+app.post("/login", async (req, res) =&gt; {
+  const user = await getUser(req.params.username, req.params.password);
+
+  if (user) {
+    res.send(200);
+  } else {
+    res.send(401);
+  }
+});
+</code></pre>
+<ol>
+<li>The <code>app.post</code> call: <code>index.ts/app.post()</code></li>
+<li>The post handler: <code>index.ts/app.post()/@1</code></li>
+<li>The call to <code>getUser</code>: <code>index.ts/app.post()/@1/getUser()</code></li>
+<li>The constant <code>user</code>: <code>index.ts/app.post()/@1/user</code></li>
+<li>The call to <code>res.send</code> with <code>200</code> passed: <code>index.ts/app.post()/@1/res.send()@1</code></li>
+<li>The call to <code>res.send</code> with <code>401</code> passed: <code>index.ts/app.post()/@1/res.send()@2</code></li>
+</ol>
+<h3 id="reactjs-counter-component">ReactJS Counter component</h3>
+<pre><code class="tsx language-tsx">export const Counter: VFC = () =&gt; {
+  const [count, setCount] = useState(0);
+  const [overLimit, setOverLimit] = useState(false);
+
+  useEffect(() =&gt; {
+    const interval = setInterval(() =&gt; {
+      setCount(() =&gt; count + 1);
+
+      if (count &gt; 10) {
+        setOverLimit(() =&gt; true);
+      }
+    }, 1_000);
+
+    return () =&gt; clearInterval(interval);
+  });
+
+  return (
+    &lt;span&gt;{count}&lt;/span&gt;
+  );
+}
+</code></pre>
+<ol>
+<li>The <code>Counter</code> itself: <code>myfile.ts/Counter</code></li>
+<li>The first call to <code>useState</code>: <code>myfile.ts/Counter/useState()@1</code></li>
+<li>The destructured constant <code>count</code>: <code>myfile.ts/Counter/count</code></li>
+<li>The destructured function <code>setCount</code>: <code>myfile.ts/Counter/setCount</code></li>
+<li>The second call to <code>useState</code>: <code>myfile.ts/Counter/useState()@2</code></li>
+<li>The call to <code>useEffect</code>: <code>myfile.ts/Counter/useEffect()</code></li>
+<li>The function passed to <code>useEffect</code>: <code>myfile.ts/Counter/useEffect()/@1</code></li>
+<li>The call to <code>setInterval</code>: <code>myfile.ts/Counter/useEffect()/@1/setInterval()</code></li>
+<li>The function passed to <code>setInterval</code>: <code>myfile.ts/Counter/useEffect()/@1/setInterval()/@1</code></li>
+<li>The call to <code>setCount</code>: <code>myfile.ts/Counter/useEffect()/@1/setInterval()/@1/setCount()</code></li>
+<li>The function passed to <code>setCount</code>: <code>myfile.ts/Counter/useEffect()/@1/setInterval()/@1/setCount()/@1</code></li>
+<li>The constant <code>interval</code>: <code>myfile.ts/Counter/useEffect()/@1/interval</code></li>
+<li>The function returned by function passed to <code>useEffect</code>: <code>myfile.ts/Counter/useEffect()/@1/func@2</code></li>
+</ol>
+    </div>
+  </main>
+  <footer>
+    <a class="license-badge" href="http://creativecommons.org/licenses/by-sa/3.0/">
+      <img alt="Creative Commons License" class="license-badge" src="https://jsdoc.app/images/cc-by-sa.svg" width="80" height="15">
+    </a>
+    <br> Copyright © 2023 the
+    <a href="https://github.com/jonathanconway/htmldoc/contributors">contributors</a> to the HTMLDoc documentation project.
+    <br> This website is <a href="https://github.com/jonathanconway/htmldoc">open source</a> and is licensed under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
+        Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+  </footer>
+</body>
+</html>

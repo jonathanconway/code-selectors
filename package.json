@@ -1,0 +1,34 @@
+{
+  "name": "code-selectors",
+  "version": "1.0.0",
+  "description": "Convention for referencing pieces of Javascript or Typescript code",
+  "main": "index.js",
+  "scripts": {
+    "build": "node index",
+    "deploy": "npx surge . usecodeselectors.surge.sh",
+    "start": "npm run build && open index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonathanconway/code-selectors.git"
+  },
+  "keywords": [
+    "code",
+    "reference",
+    "selector",
+    "shortcut",
+    "syntax",
+    "debugging"
+  ],
+  "author": "Jonathan Conway",
+  "license": "CC-BY-4.0",
+  "bugs": {
+    "url": "https://github.com/jonathanconway/code-selectors/issues"
+  },
+  "homepage": "https://github.com/jonathanconway/code-selectors#readme",
+  "devDependencies": {
+    "showdown": "^2.1.0",
+    "surge": "^0.23.1"
+  }
+}
