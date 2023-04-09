@@ -5,7 +5,7 @@ showdown.setOption('output',              'index.html');
 showdown.setOption('ghCompatibleHeaderId', true);
 
 const converter = new showdown.Converter(),
-      text      = fs.readFileSync('./index.md').toString(),
+      text      = fs.readFileSync('./README.md').toString(),
       output    = converter.makeHtml(text);
 
 const html = `
