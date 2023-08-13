@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node index",
     "deploy": "npx surge . usecodeselectors.surge.sh",
-    "start": "npm run build && open index.html",
+    "start": "concurrently \"nodemon --exec 'npm run build'\" \"http-server ./\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,7 +28,13 @@
   },
   "homepage": "https://github.com/jonathanconway/code-selectors#readme",
   "devDependencies": {
+    "concurrently": "^8.2.0",
+    "http-server": "^14.1.1",
+    "nodemon": "^3.0.1",
     "showdown": "^2.1.0",
     "surge": "^0.23.1"
+  },
+  "dependencies": {
+    "prismjs": "^1.29.0"
   }
 }
