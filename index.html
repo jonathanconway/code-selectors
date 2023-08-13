@@ -2,8 +2,12 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<title>Code Selectors - convention for referencing parts of code</title>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="index.css">
+
+<link rel="stylesheet" type="text/css" href="assets/prismjs.css" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
@@ -15,7 +19,10 @@
 </head>
 <body>
   <header>
-    <h1><strong>Code Selectors</strong> - convention for referencing parts of code</h1>
+    <div class="header-content">
+      <h1><img class="logo" src="/assets/android-chrome-192x192.png" /> <strong>Code Selectors</strong></h1>
+      <i>a convention for referencing parts of code</i>
+    </div>
   </header>
   <main>
     <div class="markdown-body">
@@ -30,13 +37,146 @@
 <p>Code selectors to the rescue!</p>
 <p>Code selectors aim to provide a consistent and concise language allowing you to reference any structure in any code file.</p>
 <p>With code selectors, you can now write something like: <code>myfile.ts/login</code> to reference your login function or <code>myfile.ts/colors.r</code> to reference the <code>r</code> field in your <code>color</code> constant.</p>
+<h2 id="interactive-demo">Interactive demo</h2>
+<p>
+  <style>
+    code.language-tsx {
+      position: relative;      
+    }
+
+    ol.hotspot-legend {
+      counter-reset:li;
+      margin: 1rem 1rem 2rem 1rem;
+      padding-left:0;
+    }
+
+    ol.hotspot-legend > li {
+      position: relative;
+      padding: 0.5 1rem;
+      list-style: none;
+    }
+
+    ol.hotspot-legend > li:before {
+      content:counter(li); /* Use the counter as content */
+      counter-increment:li; /* Increment the counter by 1 */
+
+      display: inline-block;
+      text-align: center;
+      line-height: 0.95rem;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 100%;
+      color: white;
+      background-color: black;
+      font-size: 0.7rem;
+      margin-top: -0.5rem;
+    }
+
+    ol.hotspot-legend > li code {
+      margin-left: 0.5rem;
+    }
+    
+    .hotspot-number {
+      position: absolute;
+      display: inline-block;
+      text-align: center;
+      line-height: 0.95rem;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 100%;
+      color: white;
+      background-color: black;
+      font-size: 0.7rem;
+      margin-top: -0.5rem;
+    }
+    
+    .token.hotspot {
+      outline: dashed 1px gray;
+      padding: 0 0.125rem;
+      border-radius: 0.125rem;
+    }
+
+    .token.hotspot:hover,
+    .token.hotspot:focus {
+      outline-color: black;
+    }
+
+    .token:focus:after,
+    .token:hover:after {
+      position: absolute;
+      margin-top: 1rem;
+      display: inline-block;
+      height: 1.5rem;
+      border: solid 1px black;
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      box-shadow: silver 0 0 1rem;
+    }
+
+    .token.variable.Counter:focus:after,
+    .token.variable.Counter:hover:after {
+      content: 'counter.tsx/Counter';
+    }
+
+    .token.count:focus:after,
+    .token.count:hover:after {
+      content: 'counter.tsx/Counter/count';
+    }
+
+    .token.function.useState:focus:after,
+    .token.function.useState:hover:after {
+      content: 'counter.tsx/Counter/useState()@1';
+    }
+
+    .token.function.useEffect:focus:after,
+    .token.function.useEffect:hover:after {
+      content: 'counter.tsx/Counter/useEffect()@1';
+    }
+
+    .token.variable.interval:focus:after,
+    .token.variable.interval:hover:after {
+      content: 'counter.tsx/Counter/useEffect()@1/interval';
+    }
+  </style>
+    
+  <p>Click or tap on any part of this code to see a code selector that targets it.</p>
+
+    <pre class="language-tsx" tabindex="0"><code class="language-tsx"><span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token hotspot variable Counter" tabindex="0">Counter</span><b class="hotspot-number">1</b><span class="token operator">:</span> <span class="token function-variable function">VFC</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span><span class="token hotspot variable count" tabindex="0">count</span><b class="hotspot-number">2</b><span class="token punctuation">,</span> setCount<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token hotspot function useState" tabindex="0">useState</span><b class="hotspot-number">3</b><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>overLimit<span class="token punctuation">,</span> setOverLimit<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token hotspot function useEffect" tabindex="0">useEffect</span><b class="hotspot-number">4</b><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token hotspot variable interval" tabindex="0">interval</span><b class="hotspot-number">5</b> <span class="token operator">=</span> <span class="token function">setInterval</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token function">setCount</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> count <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>count <span class="token operator">&gt;</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">setOverLimit</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1_000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">clearInterval</span><span class="token punctuation">(</span>interval<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>count<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+
+<ol class="hotspot-legend">
+  <li><code>counter.tsx/Counter</code></li>
+  <li><code>counter.tsx/Counter/count</code></li>
+  <li><code>counter.tsx/Counter/useState()@1</code></li>
+  <li><code>counter.tsx/Counter/useEffect()@1</code></li>
+  <li><code>counter.tsx/Counter/useEffect()@1/interval</code></li>
+</ol>
+  </p>
 <h2 id="characteristics-of-code-selectors">Characteristics of code selectors</h2>
-<h3 id="concise"><strong><em>Concise</em></strong></h3>
+<h3 id="_concise_"><strong><em>Concise</em></strong></h3>
 <p>Code selectors take as little space as possible. Brevity makes the selectors faster to type, easier to read and more convenient to copy/paste or add to links.</p>
-<h3 id="readable"><strong><em>Readable</em></strong></h3>
+<h3 id="_readable_"><strong><em>Readable</em></strong></h3>
 <p>Code selectors use the real names of structures as much as possible, to optimise for readability.</p>
 <p>Where names are not available, 1-based indeces are used, referencing the <em>n</em>th of the class of object being described. For example a reference to the 2nd parameter of a function call uses the index 2, even if it is preceded by previous function calls with their own parameters.</p>
-<h3 id="composable"><strong><em>Composable</em></strong></h3>
+<h3 id="_composable_"><strong><em>Composable</em></strong></h3>
 <p>Complex references can be be built up from simpler, interchangeable parts.</p>
 <p>For example, to refer to a constant in a function in a field on an object, we can compose "closure", "object field" and "structure" together, to create one complete reference.</p>
 <h2 id="parts-of-code-selectors">Parts of code selectors</h2>
@@ -76,25 +216,20 @@ function bar() {}
   <p>[file.ext] / <strong><code>(type)</code></strong>@<strong><code>(index)</code></strong></p>
 </blockquote>
 <ul>
-<li><p><strong><code>type</code></strong> is one of the following:</p>
-<ul>
+<li><strong><code>type</code></strong> is one of the following:</li>
 <li><code>func</code> - function</li>
 <li><code>arr</code> - array</li>
 <li><code>obj</code> - object</li>
-<li><code>clo</code> - anonymous closure</li></ul></li>
-<li><p><strong><code>index</code></strong> is an order index, 1 or greater.</p></li>
+<li><code>clo</code> - anonymous closure</li>
+<li><strong><code>index</code></strong> is an order index, 1 or greater.</li>
 </ul>
 <p>For example, to reference the second self-calling function declared in file <code>myfile.ts</code>:</p>
 <pre><code class="ts language-ts">// myfile.ts
 
-(function () {
-
-})();
+(function () {})();
 
 // * reference this
-(function () {
-
-})();
+(function () {})();
 </code></pre>
 <p>You can use this selector:</p>
 <blockquote>
@@ -103,13 +238,11 @@ function bar() {}
 <p>Or, to reference the second array declared inline in file <code>myfile.ts</code>:</p>
 <pre><code class="ts language-ts">// myfile.ts
 
-(function () {
+(function () {})();
 
-})();
+[1, 2, 3].map(console.log);
 
-[1,2,3].map(console.log);
-
-[4,5,6].map(console.log); // * reference this
+[4, 5, 6].map(console.log); // * reference this
 </code></pre>
 <p>You can use this selector:</p>
 <blockquote>
@@ -129,7 +262,7 @@ function bar() {}
 <pre><code class="ts language-ts">// myfile.ts
 
 const foo = {
-  bar: '1' // * reference this
+  bar: "1", // * reference this
 };
 </code></pre>
 <p>You can use this selector:</p>
@@ -141,7 +274,7 @@ const foo = {
 
 const foo = {};
 
-foo.bar = '1'; // * reference this
+foo.bar = "1"; // * reference this
 </code></pre>
 <p>You can use the same selector as above:</p>
 <blockquote>
@@ -161,8 +294,8 @@ foo.bar = '1'; // * reference this
 <pre><code class="ts language-ts">// myfile.ts
 
 const foo = [
-  'baz',
-  'bar' // * reference this
+  "baz",
+  "bar", // * reference this
 ];
 </code></pre>
 <p>You can use this selector:</p>
@@ -172,9 +305,9 @@ const foo = [
 <p>Or, to reference the string <code>bar</code>, set at index 1 of the array <code>foo</code>, declared in file <code>myfile.ts</code>:</p>
 <pre><code class="ts language-ts">// myfile.ts
 
-const foo = ['baz'];
+const foo = ["baz"];
 
-foo[1] = 'bar'; // * reference this
+foo[1] = "bar"; // * reference this
 </code></pre>
 <p>You can use the same selector as above:</p>
 <blockquote>
@@ -189,9 +322,9 @@ foo[1] = 'bar'; // * reference this
 <p>For example, to reference the call to the imported <code>foo</code> function, declared in file <code>myfile.ts</code>:</p>
 <pre><code class="ts language-ts">// myfile.ts
 
-import { foo } from 'foo.utils';
+import { foo } from "foo.utils";
 
-foo('hello');
+foo("hello");
 </code></pre>
 <p>You can use this selector:</p>
 <blockquote>
@@ -199,16 +332,16 @@ foo('hello');
 </blockquote>
 <hr />
 <h3 id="function-call-argument">Function call argument</h3>
-<p>Suppose you want to reference an argument being passed to a parameter of a function call. This can be done by referencing the function call, followed by a "containment" indicator - simply <code>/</code>, followed by a numeric 1-based index, indicating the parameter's order within the function's parameter list. </p>
+<p>Suppose you want to reference an argument being passed to a parameter of a function call. This can be done by referencing the function call, followed by a "containment" indicator - simply <code>/</code>, followed by a numeric 1-based index, indicating the parameter's order within the function's parameter list.</p>
 <blockquote>
   <p>[file.ext] / <strong><code>(call)</code></strong> / @<strong><code>(index)</code></strong></p>
 </blockquote>
 <p>For example, to reference the anonymous function passed to the 2nd parameter to the imported <code>foo</code> function, declared in file <code>myfile.ts</code>:</p>
 <pre><code class="ts language-ts">// myfile.ts
 
-import { foo } from 'foo.utils';
+import { foo } from "foo.utils";
 
-foo('hello', () =&gt; 'world');
+foo("hello", () =&gt; "world");
 </code></pre>
 <p>You can use this selector:</p>
 <blockquote>
@@ -274,10 +407,8 @@ app.post("/login", async (req, res) =&gt; {
     return () =&gt; clearInterval(interval);
   });
 
-  return (
-    &lt;span&gt;{count}&lt;/span&gt;
-  );
-}
+  return &lt;span&gt;{count}&lt;/span&gt;;
+};
 </code></pre>
 <ol>
 <li>The <code>Counter</code> itself: <code>myfile.ts/Counter</code></li>

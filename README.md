@@ -2,7 +2,7 @@
 
 > Convention for referencing pieces of code
 
-⚡️ ***It's like CSS selectors, but for code!***
+⚡️ **_It's like CSS selectors, but for code!_**
 
 Have you ever wanted a consistent and concise way of referencing a specific part of a code-base?
 
@@ -16,34 +16,37 @@ Code selectors aim to provide a consistent and concise language allowing you to 
 
 With code selectors, you can now write something like: `myfile.ts/login` to reference your login function or `myfile.ts/colors.r` to reference the `r` field in your `color` constant.
 
+## Interactive demo
+
+{hotspot}
+
 ## Characteristics of code selectors
 
-### ***Concise***
+### **_Concise_**
 
 Code selectors take as little space as possible. Brevity makes the selectors faster to type, easier to read and more convenient to copy/paste or add to links.
 
-### ***Readable***
+### **_Readable_**
 
 Code selectors use the real names of structures as much as possible, to optimise for readability.
 
 Where names are not available, 1-based indeces are used, referencing the *n*th of the class of object being described. For example a reference to the 2nd parameter of a function call uses the index 2, even if it is preceded by previous function calls with their own parameters.
 
-### ***Composable***
+### **_Composable_**
 
 Complex references can be be built up from simpler, interchangeable parts.
 
 For example, to refer to a constant in a function in a field on an object, we can compose "closure", "object field" and "structure" together, to create one complete reference.
 
-
 ## Parts of code selectors
 
-* [Structure](#structure)
-* [Anonymous structure](#anonymous-structure)
-* [Object field](#object-field)
-* [Array element](#array-element)
-* [Function call](#function-call)
-* [Function call argument](#function-call-argument)
-* [Closure](#closure)
+- [Structure](#structure)
+- [Anonymous structure](#anonymous-structure)
+- [Object field](#object-field)
+- [Array element](#array-element)
+- [Function call](#function-call)
+- [Function call argument](#function-call-argument)
+- [Closure](#closure)
 
 ### Structure
 
@@ -51,7 +54,7 @@ Any named structure (function, constant, etc) declared in the main body of a fil
 
 > [file.ext] / **`name`**
 
-* **`name`** is the name of the structure
+- **`name`** is the name of the structure
 
 For example, to reference the function `bar` in file `myfile.ts`:
 
@@ -68,7 +71,7 @@ You can use this selector:
 
 > `myfile.ts/bar`
 
------
+---
 
 ### Anonymous structure
 
@@ -76,27 +79,22 @@ Not all structures have names. We might declare a self-calling function (IFFE) o
 
 > [file.ext] / **`(type)`**@**`(index)`**
 
-* **`type`** is one of the following:
-    * `func` - function
-    * `arr` - array
-    * `obj` - object
-    * `clo` - anonymous closure
-
-* **`index`** is an order index, 1 or greater.
+- **`type`** is one of the following:
+  - `func` - function
+  - `arr` - array
+  - `obj` - object
+  - `clo` - anonymous closure
+- **`index`** is an order index, 1 or greater.
 
 For example, to reference the second self-calling function declared in file `myfile.ts`:
 
 ```ts
 // myfile.ts
 
-(function () {
-
-})();
+(function () {})();
 
 // * reference this
-(function () {
-  
-})();
+(function () {})();
 ```
 
 You can use this selector:
@@ -108,20 +106,18 @@ Or, to reference the second array declared inline in file `myfile.ts`:
 ```ts
 // myfile.ts
 
-(function () {
+(function () {})();
 
-})();
+[1, 2, 3].map(console.log);
 
-[1,2,3].map(console.log);
-
-[4,5,6].map(console.log); // * reference this
+[4, 5, 6].map(console.log); // * reference this
 ```
 
 You can use this selector:
 
 > `myfile.ts/arr@2`
 
------
+---
 
 ### Object field
 
@@ -129,9 +125,9 @@ Any structure which is declared or set as a field on a containing object can be 
 
 > [file.ext] / **`(object)`**.**`(field)`**
 
-* **`object`** is the *name* of the containing structure
+- **`object`** is the _name_ of the containing structure
 
-* **`field`** is the name of the contained field
+- **`field`** is the name of the contained field
 
 For example, to reference the field `bar`, declared in the object `foo`, declared in file `myfile.ts`:
 
@@ -139,7 +135,7 @@ For example, to reference the field `bar`, declared in the object `foo`, declare
 // myfile.ts
 
 const foo = {
-  bar: '1' // * reference this
+  bar: "1", // * reference this
 };
 ```
 
@@ -154,14 +150,14 @@ Or, to reference the field `bar`, set as a field on the object `foo`, declared i
 
 const foo = {};
 
-foo.bar = '1'; // * reference this
+foo.bar = "1"; // * reference this
 ```
 
 You can use the same selector as above:
 
 > `myfile.ts/foo.bar`
 
------
+---
 
 ### Array element
 
@@ -169,9 +165,9 @@ Any structure which is declared as an element on a containing array can be refer
 
 > [file.ext] / **`(array)`** [**`(index)`**]
 
-* **`array`** is the *name* of the containing structure
+- **`array`** is the _name_ of the containing structure
 
-* **`index`** is the *index* of the contained element
+- **`index`** is the _index_ of the contained element
 
 For example, to reference the string `bar`, held in the array `foo` at index 1, declared in file `myfile.ts`:
 
@@ -179,8 +175,8 @@ For example, to reference the string `bar`, held in the array `foo` at index 1, 
 // myfile.ts
 
 const foo = [
-  'baz',
-  'bar' // * reference this
+  "baz",
+  "bar", // * reference this
 ];
 ```
 
@@ -193,16 +189,16 @@ Or, to reference the string `bar`, set at index 1 of the array `foo`, declared i
 ```ts
 // myfile.ts
 
-const foo = ['baz'];
+const foo = ["baz"];
 
-foo[1] = 'bar'; // * reference this
+foo[1] = "bar"; // * reference this
 ```
 
 You can use the same selector as above:
 
 > `myfile.ts/foo[1]`
 
------
+---
 
 ### Function call
 
@@ -215,20 +211,20 @@ For example, to reference the call to the imported `foo` function, declared in f
 ```ts
 // myfile.ts
 
-import { foo } from 'foo.utils';
+import { foo } from "foo.utils";
 
-foo('hello');
+foo("hello");
 ```
 
 You can use this selector:
 
 > `myfile.ts/foo()`
 
------
+---
 
 ### Function call argument
 
-Suppose you want to reference an argument being passed to a parameter of a function call. This can be done by referencing the function call, followed by a "containment" indicator - simply `/`, followed by a numeric 1-based index, indicating the parameter's order within the function's parameter list. 
+Suppose you want to reference an argument being passed to a parameter of a function call. This can be done by referencing the function call, followed by a "containment" indicator - simply `/`, followed by a numeric 1-based index, indicating the parameter's order within the function's parameter list.
 
 > [file.ext] / **`(call)`** / @**`(index)`**
 
@@ -237,16 +233,16 @@ For example, to reference the anonymous function passed to the 2nd parameter to 
 ```ts
 // myfile.ts
 
-import { foo } from 'foo.utils';
+import { foo } from "foo.utils";
 
-foo('hello', () => 'world');
+foo("hello", () => "world");
 ```
 
 You can use this selector:
 
 > `myfile.ts/foo()/@2`
 
------
+---
 
 ### Closure
 
@@ -268,7 +264,7 @@ You can use this selector:
 
 > `myfile.ts/foo/bar`
 
------
+---
 
 ## Complex examples
 
@@ -298,7 +294,6 @@ app.post("/login", async (req, res) => {
 5. The call to `res.send` with `200` passed: `index.ts/app.post()/@1/res.send()@1`
 6. The call to `res.send` with `401` passed: `index.ts/app.post()/@1/res.send()@2`
 
-
 ### ReactJS Counter component
 
 ```tsx
@@ -318,10 +313,8 @@ export const Counter: VFC = () => {
     return () => clearInterval(interval);
   });
 
-  return (
-    <span>{count}</span>
-  );
-}
+  return <span>{count}</span>;
+};
 ```
 
 1. The `Counter` itself: `myfile.ts/Counter`
@@ -337,12 +330,3 @@ export const Counter: VFC = () => {
 11. The function passed to `setCount`: `myfile.ts/Counter/useEffect()/@1/setInterval()/@1/setCount()/@1`
 12. The constant `interval`: `myfile.ts/Counter/useEffect()/@1/interval`
 13. The function returned by function passed to `useEffect`: `myfile.ts/Counter/useEffect()/@1/func@2`
-
-
-
-
-
-
-
-
-

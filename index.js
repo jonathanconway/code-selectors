@@ -1,12 +1,13 @@
 const fs        = require('fs'),
-      showdown  = require('showdown');
+      showdown  = require('showdown'),
+      hotspot  =  require('./hotspot').hotspot;
 
 showdown.setOption('output',              'index.html');
 showdown.setOption('ghCompatibleHeaderId', true);
 
 const converter = new showdown.Converter(),
       text      = fs.readFileSync('./README.md').toString(),
-      output    = converter.makeHtml(text);
+      output    = converter.makeHtml(text).replace("{hotspot}", hotspot());
 
 const html = `
 <!DOCTYPE HTML>
@@ -15,6 +16,9 @@ const html = `
 <title>Code Selectors - convention for referencing parts of code</title>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="index.css">
+
+<link rel="stylesheet" type="text/css" href="assets/prismjs.css" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
@@ -26,7 +30,8 @@ const html = `
 </head>
 <body>
   <header>
-    <h1><strong>Code Selectors</strong> - convention for referencing parts of code</h1>
+    <h1><img class="logo" src="/assets/android-chrome-192x192.png" /> <strong>Code Selectors</strong></h1>
+    <i>a convention for referencing parts of code</i>
   </header>
   <main>
     <div class="markdown-body">
