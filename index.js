@@ -30,8 +30,10 @@ const html = `
 </head>
 <body>
   <header>
-    <h1><img class="logo" src="/assets/android-chrome-192x192.png" /> <strong>Code Selectors</strong></h1>
-    <i>a convention for referencing parts of code</i>
+    <div class="header-container">
+      <h1><img class="logo" src="/assets/android-chrome-192x192.png" /> <strong>Code Selectors</strong></h1>
+      <i>a convention for referencing parts of code</i>
+    </div>
   </header>
   <main>
     <div class="markdown-body">

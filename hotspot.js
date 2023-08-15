@@ -55,6 +55,7 @@ exports.hotspot = function hotspot() {
       outline: dashed 1px gray;
       padding: 0 0.125rem;
       border-radius: 0.125rem;
+      cursor: pointer;
     }
 
     .token.hotspot:hover,
